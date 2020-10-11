@@ -1,5 +1,6 @@
 {
   "name": "tictactoe",
+  "homepage": "https://vhoaian.github.io/webnc/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/static/js/main.a98b7fa2.chunk.js",
-    "main.js.map": "/static/js/main.a98b7fa2.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.0cd3ba68.js",
-    "runtime-main.js.map": "/static/js/runtime-main.0cd3ba68.js.map",
-    "static/js/2.827857ef.chunk.js": "/static/js/2.827857ef.chunk.js",
-    "static/js/2.827857ef.chunk.js.map": "/static/js/2.827857ef.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.b79fe3875da1f87b738996151fed7652.js": "/precache-manifest.b79fe3875da1f87b738996151fed7652.js",
-    "service-worker.js": "/service-worker.js",
-    "static/js/2.827857ef.chunk.js.LICENSE.txt": "/static/js/2.827857ef.chunk.js.LICENSE.txt"
+    "main.js": "/webnc/static/js/main.a98b7fa2.chunk.js",
+    "main.js.map": "/webnc/static/js/main.a98b7fa2.chunk.js.map",
+    "runtime-main.js": "/webnc/static/js/runtime-main.822fb4e9.js",
+    "runtime-main.js.map": "/webnc/static/js/runtime-main.822fb4e9.js.map",
+    "static/js/2.827857ef.chunk.js": "/webnc/static/js/2.827857ef.chunk.js",
+    "static/js/2.827857ef.chunk.js.map": "/webnc/static/js/2.827857ef.chunk.js.map",
+    "index.html": "/webnc/index.html",
+    "precache-manifest.efa879981f8236b26f5006153d4e0300.js": "/webnc/precache-manifest.efa879981f8236b26f5006153d4e0300.js",
+    "service-worker.js": "/webnc/service-worker.js",
+    "static/js/2.827857ef.chunk.js.LICENSE.txt": "/webnc/static/js/2.827857ef.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0cd3ba68.js",
+    "static/js/runtime-main.822fb4e9.js",
     "static/js/2.827857ef.chunk.js",
     "static/js/main.a98b7fa2.chunk.js"
   ]

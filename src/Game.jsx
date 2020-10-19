@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Board from "./Board";
 
 function calculateWinner(squares) {
@@ -59,103 +59,86 @@ function isDrawnGame(squares) {
   return true;
 }
 
-export default class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      history: [{
+export default function Game() {
+  const [history, setHistory] = useState([{
         squares: Array(9).fill(null),
-      }],
-      stepNumber: 0,
-      xIsNext: true,
-      movesAreAscending: true
-    };
-  }
-
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
+      }]);
+  const [stepNumber, setStepNumber] = useState(0);
+  const [xIsNext, setXIsNext] = useState(true);
+  const [movesAreAscending, setMovesAreAscending] = useState(true);
+  
+  const handleClick = i => {
+    const _history = history.slice(0, stepNumber + 1);
+    const current = _history[_history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
+    squares[i] = xIsNext ? 'X' : 'O';
+    
+    setHistory(_history.concat([{
+      squares: squares,
+    }]));
+    setStepNumber(_history.length);
+    setXIsNext(!xIsNext);
   }
 
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
+  const jumpTo = step => {
+    setStepNumber(step);
+    setXIsNext((step % 2) === 0);
   }
 
-  toggleMovesOrder() {
-    this.setState(
-      {
-        movesAreAscending: !this.state.movesAreAscending
-      });
-  }
+  const toggleMovesOrder = () => setMovesAreAscending(!movesAreAscending);
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-    const movesAreAscending = this.state.movesAreAscending;
+  const current = history[stepNumber];
+  const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
-      const [x, y] = move !== 0 ? findLocation(history[move-1], history[move]) : [null, null];
-      const desc = move ?
-        'Go to move #' + move + ` (${x}, ${y})` :
-        'Go to game start';
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{move === this.state.stepNumber ? <b>{desc}</b>: desc}</button>
-        </li>
-      );
-    });
-    if (!this.state.movesAreAscending)
-      moves.reverse();
-
-    let status;
-    let highlight = Array(9).fill(false);
-    if (winner) {
-      status = 'Winner: ' + winner;
-      highlight = getWinnersSquares(current.squares);
-    } else {
-      if (isDrawnGame(current.squares))
-        status = 'Draw';
-      else
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
+  const moves = history.map((step, move) => {
+    const [x, y] = move !== 0 ? findLocation(history[move-1], history[move]) : [null, null];
+    const desc = move ?
+      'Go to move #' + move + ` (${x}, ${y})` :
+      'Go to game start';
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-            highlight={highlight}
-          />
-        </div>
-        <div className="game-info">
-          <div>
-            {status}
-          </div>
-          <div>
-            <button onClick={() => this.toggleMovesOrder()}>
-              Toggle moves' order
-            </button>
-          </div>
-          {movesAreAscending ? <ol>{moves}</ol> : <ol reversed>{moves}</ol>}
-        </div>
-      </div>
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{move === stepNumber ? <b>{desc}</b>: desc}</button>
+      </li>
     );
+  });
+  if (!movesAreAscending)
+    moves.reverse();
+
+  let status;
+  let highlight = Array(9).fill(false);
+  if (winner) {
+    status = 'Winner: ' + winner;
+    highlight = getWinnersSquares(current.squares);
+  } else {
+    if (isDrawnGame(current.squares))
+      status = 'Draw';
+    else
+      status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={current.squares}
+          onClick={(i) => handleClick(i)}
+          highlight={highlight}
+        />
+      </div>
+      <div className="game-info">
+        <div>
+          {status}
+        </div>
+        <div>
+          <button onClick={() => toggleMovesOrder()}>
+            Toggle moves' order
+          </button>
+        </div>
+        {movesAreAscending ? <ol>{moves}</ol> : <ol reversed>{moves}</ol>}
+      </div>
+    </div>
+  );
 }
